@@ -1,0 +1,57 @@
+{
+    "name": "noki/xml-converter",
+    "description": "A Laravel package for converting XML to JSON and XML to array.",
+    "keywords": [
+        "laravel",
+        "xmlToJson",
+        "xmlToArray",
+        "noki"
+    ],
+    "type": "library",
+    "homepage": "https://github.com/novakurosevic/xml-converter",
+    "authors": [
+        {
+            "name": "Novak Urosevic",
+            "role": "Developer"
+        },
+        {
+            "name": "ChatGpt",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Noki\\XmlConverter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Noki\\XmlConverter\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Noki\\XmlConverter\\XmlConverterServiceProvider"
+            ],
+            "aliases": {
+                "Convert": "Noki\\XmlConverter\\Facades\\Convert"
+            }
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "ext-simplexml": "*",
+        "ext-libxml": "*",
+        "ext-dom": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/novakurosevic/xml-converter"
+        }
+    ]
+}
