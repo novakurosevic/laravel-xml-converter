@@ -1,4 +1,4 @@
-# XML to JSON Converter Laravel Package
+# Laravel XML Converter Package
 
 ## 🧾 Introduction
 
