@@ -1,5 +1,5 @@
 {
-    "name": "noki/xml-converter",
+    "name": "noki/laravel-xml-converter",
     "description": "Laravel XML Converter is Laravel package for converting XML to JSON and XML to array.",
     "keywords": [
         "laravel",
@@ -9,7 +9,7 @@
         "Laravel XML Converter"
     ],
     "type": "library",
-    "homepage": "https://github.com/novakurosevic/xml-converter",
+    "homepage": "https://github.com/novakurosevic/laravel-xml-converter",
     "authors": [
         {
             "name": "Novak Urosevic",
