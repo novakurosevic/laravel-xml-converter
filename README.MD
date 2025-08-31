@@ -33,7 +33,7 @@ It supports:
 ### Composer Installation
 
 ```bash
-composer require noki/xml-converter
+composer require noki/laravel-xml-converter
 ```
 
 
