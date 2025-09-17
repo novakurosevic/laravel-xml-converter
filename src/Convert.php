@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Log;
 
 class Convert
 {
+    protected array $result;
+
     /**
      * Check are required extensions installed.
      *
@@ -172,6 +174,7 @@ class Convert
                 foreach ($xml->children($ns_uri) as $child_name => $child) {
                     $clean_name = $child->getName(); // Strips namespace prefix
                     $child_prefix = $prefix;
+                    $total_children = $xml->count();
 
                     try {
                         $entry = self::xmlToArrayWithNamespaceTagging($child, $namespace_in_tag_name, $is_cdata);
@@ -197,7 +200,11 @@ class Convert
                         $entry["@namespace"] = $child_prefix;
                     }
 
-                    $result[$namespace_key] = $entry;
+                    if($total_children > 1){
+                        $result[$namespace_key][] = $entry;
+                    }else{
+                        $result[$namespace_key] = $entry;
+                    }
                 }
 
             }
@@ -205,6 +212,7 @@ class Convert
             // If there are no namespaces, just iterate over the children directly
             foreach ($xml->children() as $child_name => $child) {
                 $clean_name = $child->getName(); // Strips namespace prefix
+                $total_children = $xml->count();
 
                 try {
                     $entry = self::xmlToArrayWithNamespaceTagging($child, $namespace_in_tag_name, $is_cdata);
@@ -222,7 +230,12 @@ class Convert
                     $result[$namespace_key] = [];
                 }
 
-                $result[$namespace_key] = $entry;
+                if($total_children > 1){
+                    $result[$namespace_key][] = $entry;
+                }else{
+                    $result[$namespace_key] = $entry;
+                }
+
             }
         }
 
