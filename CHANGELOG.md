@@ -25,3 +25,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Refactored XML to Array conversion logic to handle namespaces properly.
 - Optimized error logging for validation failures.
+
+
+## [1.0.2] - 2025-09-17
+
+### Fixed
+- Fixed error with displaying only one item if there are several items inside some xml tag.
+
+
