@@ -200,7 +200,7 @@ class Convert
                         $entry["@namespace"] = $child_prefix;
                     }
 
-                    if($total_children > 1){
+                    if($total_children > 1 && !is_array($entry)){
                         $result[$namespace_key][] = $entry;
                     }else{
                         $result[$namespace_key] = $entry;
@@ -230,7 +230,7 @@ class Convert
                     $result[$namespace_key] = [];
                 }
 
-                if($total_children > 1){
+                if($total_children > 1 && is_array($entry)){
                     $result[$namespace_key][] = $entry;
                 }else{
                     $result[$namespace_key] = $entry;
