@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class Convert
 {
-    protected array $result;
 
     /**
      * Check are required extensions installed.
@@ -88,7 +87,16 @@ class Convert
 
         // Convert to array (preserving namespaces)
         $result = self::xmlToArrayWithNamespaceTagging($simple_xml, $namespace_in_tag_name, $is_cdata);
-        return !empty($result) ? $result : [];
+        $root_element = $simple_xml->getName();
+        $result = self::fixSingleArrayElements($result);
+
+        if(!empty($result)){
+            return [$root_element => $result];
+        }else{
+            $result = [];
+        }
+
+        return $result;
     }
 
     /**
@@ -174,7 +182,6 @@ class Convert
                 foreach ($xml->children($ns_uri) as $child_name => $child) {
                     $clean_name = $child->getName(); // Strips namespace prefix
                     $child_prefix = $prefix;
-                    $total_children = $xml->count();
 
                     try {
                         $entry = self::xmlToArrayWithNamespaceTagging($child, $namespace_in_tag_name, $is_cdata);
@@ -200,7 +207,7 @@ class Convert
                         $entry["@namespace"] = $child_prefix;
                     }
 
-                    if($total_children > 1 && !is_array($entry)){
+                    if(is_array($entry)){
                         $result[$namespace_key][] = $entry;
                     }else{
                         $result[$namespace_key] = $entry;
@@ -212,7 +219,6 @@ class Convert
             // If there are no namespaces, just iterate over the children directly
             foreach ($xml->children() as $child_name => $child) {
                 $clean_name = $child->getName(); // Strips namespace prefix
-                $total_children = $xml->count();
 
                 try {
                     $entry = self::xmlToArrayWithNamespaceTagging($child, $namespace_in_tag_name, $is_cdata);
@@ -230,7 +236,7 @@ class Convert
                     $result[$namespace_key] = [];
                 }
 
-                if($total_children > 1 && is_array($entry)){
+                if(is_array($entry)){
                     $result[$namespace_key][] = $entry;
                 }else{
                     $result[$namespace_key] = $entry;
@@ -259,6 +265,25 @@ class Convert
         }
 
         return $result;
+    }
+
+    protected static function fixSingleArrayElements($data)
+    {
+        if (!is_array($data)) {
+            return $data;
+        }
+
+        // Array have only one element and it's key is 0 then return that element
+        if (count($data) === 1 && array_key_exists(0, $data)) {
+            return self::fixSingleArrayElements($data[0]);
+        }
+
+        // For all others, go recursively
+        foreach ($data as $key => $value) {
+            $data[$key] = self::fixSingleArrayElements($value);
+        }
+
+        return $data;
     }
 
     /**
