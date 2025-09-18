@@ -33,3 +33,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed error with displaying only one item if there are several items inside some xml tag.
 
 
+## [1.0.3] - 2025-09-18
+
+### Fixed
+- Fixed error with parsing nested objects.
